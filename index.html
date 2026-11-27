@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Signature Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input,
+        select {
+            width: 100%;
+        }
+
+        .signature a {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <main class="mx-auto max-w-5xl p-4 sm:p-6">
+        <div class="grid gap-6 lg:grid-cols-2">
+            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 class="mb-5 text-xl font-bold">Thông tin chữ ký</h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Họ và tên</label>
+                        <input id="name"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="Nguyễn Văn An" placeholder="Nhập họ tên">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Chức vụ</label>
+                        <input id="job"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="Web Developer" placeholder="Ví dụ: Nhân viên kinh doanh">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Tên công ty</label>
+                        <input id="company"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="ABC Technology" placeholder="Tên công ty">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Email</label>
+                        <input id="email" type="email"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="nguyenvanan@gmail.com" placeholder="example@gmail.com">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Số điện thoại</label>
+                        <input id="phone"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="0901234567" placeholder="Nhập số điện thoại">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Website</label>
+                        <input id="website"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="https://example.com" placeholder="https://example.com">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Địa chỉ</label>
+                        <input id="address"
+                            class="rounded-xl border border-slate-300 p-3 outline-none focus:border-yellow-400"
+                            value="Cần Thơ, Việt Nam" placeholder="Địa chỉ công ty">
+                    </div>
+
+                    <div>
+                        <label class="mb-1 block text-sm font-semibold">Màu chủ đạo</label>
+                        <select id="color"
+                            class="rounded-xl border border-slate-300 bg-white p-3 outline-none focus:border-yellow-400">
+                            <option value="#2563eb">Xanh dương</option>
+                            <option value="#0f766e">Xanh lá</option>
+                            <option value="#7c3aed">Tím</option>
+                            <option value="#dc2626">Đỏ</option>
+                            <option value="#334155">Xám đậm</option>
+                        </select>
+                    </div>
+
+                    <button id="reset"
+                        class="min-h-11 w-full rounded-xl border border-slate-300 px-5 font-semibold hover:bg-slate-50">
+                        Đặt lại mẫu
+                    </button>
+                </div>
+            </section>
+
+            <section class="space-y-5">
+                <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="mb-4 flex items-center justify-between gap-2">
+                        <h2 class="text-xl font-bold">Xem trước chữ ký</h2>
+                        <span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Trực
+                            tiếp</span>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white p-4">
+                        <div id="preview" class="signature min-w-[260px]"></div>
+                    </div>
+
+                    <p class="mt-3 text-sm text-slate-500">Chữ ký sẽ tự động cập nhật khi bạn thay đổi thông tin.</p>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <h2 class="mb-3 text-lg font-bold">Mã HTML chữ ký</h2>
+                    <textarea id="htmlOutput" readonly rows="9"
+                        class="w-full rounded-xl border border-slate-300 bg-slate-50 p-3 font-mono text-xs outline-none"></textarea>
+                    <button id="copyHtml"
+                        class="mt-3 min-h-11 w-full rounded-xl bg-yellow-400 px-5 font-bold text-slate-900 hover:bg-yellow-500">
+                        Sao chép mã HTML
+                    </button>
+                    <button id="copyText"
+                        class="mt-2 min-h-11 w-full rounded-xl border border-slate-300 px-5 font-semibold hover:bg-slate-50">
+                        Sao chép chữ ký dạng văn bản
+                    </button>
+                    <p id="message" class="mt-3 text-center text-sm text-green-600"></p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const fields = ['name', 'job', 'company', 'email', 'phone', 'website', 'address', 'color'];
+        const preview = document.getElementById('preview');
+        const htmlOutput = document.getElementById('htmlOutput');
+        const message = document.getElementById('message');
+
+        function getValue(id) {
+            return document.getElementById(id).value.trim();
+        }
+
+        function escapeHTML(value) {
+            return value.replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[char]);
+        }
+
+        function safeUrl(value) {
+            try {
+                const url = new URL(value);
+                return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+            } catch {
+                return '';
+            }
+        }
+
+        function createSignature() {
+            const name = escapeHTML(getValue('name') || 'Họ và tên');
+            const job = escapeHTML(getValue('job'));
+            const company = escapeHTML(getValue('company'));
+            const email = getValue('email');
+            const phone = getValue('phone');
+            const address = escapeHTML(getValue('address'));
+            const website = getValue('website');
+            const color = getValue('color');
+
+            const safeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : '';
+            const safePhone = /^[0-9+().\-\s]{6,20}$/.test(phone) ? phone : '';
+            const safeWebsite = safeUrl(website);
+
+            const emailRow = safeEmail
+                ? `<tr><td style="padding:3px 0;color:#64748b;font-size:13px;">Email: <a href="mailto:${escapeHTML(safeEmail)}" style="color:${color};">${escapeHTML(safeEmail)}</a></td></tr>`
+                : '';
+
+            const phoneRow = safePhone
+                ? `<tr><td style="padding:3px 0;color:#64748b;font-size:13px;">Điện thoại: ${escapeHTML(safePhone)}</td></tr>`
+                : '';
+
+            const websiteRow = safeWebsite
+                ? `<tr><td style="padding:3px 0;color:#64748b;font-size:13px;">Website: <a href="${escapeHTML(safeWebsite)}" style="color:${color};">${escapeHTML(website)}</a></td></tr>`
+                : '';
+
+            const addressRow = address
+                ? `<tr><td style="padding:3px 0;color:#64748b;font-size:13px;">Địa chỉ: ${address}</td></tr>`
+                : '';
+
+            return `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;border-collapse:collapse;max-width:420px;">
+  <tr>
+    <td style="border-left:4px solid ${color};padding:8px 0 8px 14px;">
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr><td style="font-size:18px;font-weight:bold;color:#0f172a;padding-bottom:3px;">${name}</td></tr>
+        <tr><td style="font-size:13px;color:${color};font-weight:bold;padding-bottom:8px;">${job}</td></tr>
+        <tr><td style="font-size:13px;color:#334155;font-weight:bold;padding-bottom:5px;">${company}</td></tr>
+        ${emailRow}
+        ${phoneRow}
+        ${websiteRow}
+        ${addressRow}
+      </table>
+    </td>
+  </tr>
+</table>`;
+        }
+
+        function updatePreview() {
+            const html = createSignature();
+            preview.innerHTML = html;
+            htmlOutput.value = html;
+        }
+
+        async function copyContent(value) {
+            try {
+                await navigator.clipboard.writeText(value);
+                message.textContent = 'Đã sao chép thành công!';
+            } catch {
+                message.textContent = 'Không thể sao chép. Hãy chọn và sao chép thủ công.';
+            }
+            setTimeout(() => message.textContent = '', 2500);
+        }
+
+        fields.forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+            document.getElementById(id).addEventListener('change', updatePreview);
+        });
+
+        document.getElementById('copyHtml').addEventListener('click', () => {
+            copyContent(htmlOutput.value);
+        });
+
+        document.getElementById('copyText').addEventListener('click', () => {
+            const text = [
+                getValue('name'),
+                getValue('job'),
+                getValue('company'),
+                getValue('email') ? 'Email: ' + getValue('email') : '',
+                getValue('phone') ? 'Điện thoại: ' + getValue('phone') : '',
+                getValue('website') ? 'Website: ' + getValue('website') : '',
+                getValue('address') ? 'Địa chỉ: ' + getValue('address') : ''
+            ].filter(Boolean).join('\n');
+
+            copyContent(text);
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+            document.getElementById('name').value = 'Nguyễn Văn An';
+            document.getElementById('job').value = 'Web Developer';
+            document.getElementById('company').value = 'ABC Technology';
+            document.getElementById('email').value = 'nguyenvanan@gmail.com';
+            document.getElementById('phone').value = '0901234567';
+            document.getElementById('website').value = 'https://example.com';
+            document.getElementById('address').value = 'Cần Thơ, Việt Nam';
+            document.getElementById('color').value = '#2563eb';
+            updatePreview();
+            message.textContent = 'Đã đặt lại dữ liệu mẫu!';
+            setTimeout(() => message.textContent = '', 2500);
+        });
+
+        updatePreview();
+    </script>
+</body>
+
+</html>
